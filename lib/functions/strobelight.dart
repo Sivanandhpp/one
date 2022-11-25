@@ -1,4 +1,3 @@
-import 'dart:io';
 import 'package:sleek_circular_slider/sleek_circular_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:one/models/themecolor.dart';
@@ -79,28 +78,29 @@ class _StrobeLightState extends State<StrobeLight> {
                 height: 30,
               ),
               MaterialButton(
-                  color: ThemeColor.primary,
-                  onPressed: () async {
-                    if (isOn) {
+                color: ThemeColor.primary,
+                onPressed: () async {
+                  if (isOn) {
+                    torchController.toggle();
+                    isOn = false;
+                  } else {
+                    double temp = strobeSpeed * 1000;
+                    int speedInMillisecond = temp.toInt();
+
+                    for (int i = 0; i < 10; i++) {
                       torchController.toggle();
-                      isOn = false;
-                    } else {
-                      double temp = strobeSpeed * 1000;
-                      int speedInMillisecond = temp.toInt();
+                      isOn = isOn ? false : true;
 
-                      for (int i = 0; i < 10; i++) {
-                        torchController.toggle();
-                        isOn = isOn ? false : true;
-
-                        await Future.delayed(
-                            Duration(milliseconds: speedInMillisecond), () {});
-                      }
+                      await Future.delayed(
+                          Duration(milliseconds: speedInMillisecond), () {});
                     }
-                  },
-                  child: const Text(
-                    'Toggle',
-                    style: TextStyle(color: ThemeColor.white),
-                  )),
+                  }
+                },
+                child: const Text(
+                  'Toggle flash',
+                  style: TextStyle(color: ThemeColor.white),
+                ),
+              ),
             ],
           ),
         ),
