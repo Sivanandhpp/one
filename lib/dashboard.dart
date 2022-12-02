@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl_phone_number_input/intl_phone_number_input.dart';
+import 'package:one/functions/status_saver.dart';
 import 'package:one/functions/strobelight.dart';
 import 'package:one/functions/ytdownload.dart';
 import 'package:one/models/themecolor.dart';
@@ -192,7 +193,7 @@ class _DashBoardState extends State<DashBoard> {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => StrobeLight()));
+                              builder: (context) => const StrobeLight()));
                     },
                   ),
                   //WHATSAPP STATUS SAVE
@@ -215,10 +216,11 @@ class _DashBoardState extends State<DashBoard> {
                       ),
                     ),
                     onTap: () {
-                      // Navigator.push(
-                      //     context,
-                      //     MaterialPageRoute(
-                      //         builder: (context) => ));
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => StatusSaver(),
+                          ));
                     },
                   ),
                   //

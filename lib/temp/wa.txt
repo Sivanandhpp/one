@@ -1,0 +1,73 @@
+
+
+// Container(
+//         margin: const EdgeInsets.all(12),
+//         child: StaggeredGridView.countBuilder(
+//           shrinkWrap: true,
+//           crossAxisCount: 2,
+//           crossAxisSpacing: 6,
+//           mainAxisSpacing: 14,
+//           itemCount: videoList.length,
+//           itemBuilder: (context, index) {
+//             return Container(
+//               decoration: const BoxDecoration(
+//                   color: Colors.transparent,
+//                   borderRadius: BorderRadius.all(Radius.circular(15))),
+//               child: InkWell(
+//                 onTap: () => Navigator.push(
+//                   context,
+//                   MaterialPageRoute(
+//                     builder: (context) => PlayStatusVideo(videoList[index]),
+//                   ),
+//                 ),
+//                 child: FutureBuilder(
+//                   future: _getImage(videoList[index]),
+//                   builder: (context, snapshot) {
+//                     if (snapshot.connectionState == ConnectionState.done) {
+//                       if (snapshot.hasData) {
+//                         return Column(
+//                           children: [
+//                             Hero(
+//                               tag: videoList[index],
+//                               child: Stack(
+//                                 children: [
+//                                   ClipRRect(
+//                                     borderRadius: const BorderRadius.all(
+//                                         Radius.circular(15)),
+//                                     child: Image.file(
+//                                       File(
+//                                         snapshot.data.toString(),
+//                                       ),
+//                                       fit: BoxFit.cover,
+//                                     ),
+//                                   ),
+//                                   Container(
+//                                     alignment: Alignment.bottomCenter,
+//                                     child: const Icon(Icons.play_arrow),
+//                                   )
+//                                 ],
+//                               ),
+//                             )
+//                           ],
+//                         );
+//                       } else {
+//                         return const Center(
+//                           child: CircularProgressIndicator(),
+//                         );
+//                       }
+//                     } else {
+//                       return Container(
+//                         child: Image.network(
+//                             'https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/No-Image-Placeholder.svg/1665px-No-Image-Placeholder.svg.png'),
+//                       );
+//                     }
+//                   },
+//                 ),
+//               ),
+//             );
+//           },
+//           staggeredTileBuilder: (index) {
+//             return StaggeredTile.count(1, index.isEven ? 1.2 : 1.8);
+//           },
+//         ),
+//       );
