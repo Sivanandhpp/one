@@ -8,7 +8,7 @@ import 'package:video_player/video_player.dart';
 import 'package:video_thumbnail/video_thumbnail.dart';
 
 final Directory _videoDir =
-    new Directory('/storage/emulated/0/WhatsApp/Media/.Statuses');
+    Directory('/storage/emulated/0/WhatsApp/Media/.Statuses');
 
 class StatusSaver extends StatefulWidget {
   const StatusSaver({super.key});
@@ -25,7 +25,7 @@ class _StatusSaverState extends State<StatusSaver> {
 
   @override
   Widget build(BuildContext context) {
-    if (!Directory("${_videoDir.path}").existsSync()) {
+    if (!Directory(_videoDir.path).existsSync()) {
       return const Scaffold(
         backgroundColor: ThemeColor.scaffoldBgColor,
         body: SafeArea(
@@ -98,10 +98,7 @@ class VideoGridWidget extends StatefulWidget {
 class _VideoGridWidgetState extends State<VideoGridWidget> {
   _getImage(videoPathUrl) async {
     String? thumb = await VideoThumbnail.thumbnailFile(
-        video: videoPathUrl,
-        maxWidth: 250,
-        imageFormat: ImageFormat.WEBP,
-        quality: 10);
+        video: videoPathUrl, imageFormat: ImageFormat.WEBP, quality: 10);
     return thumb;
   }
 
@@ -117,15 +114,12 @@ class _VideoGridWidgetState extends State<VideoGridWidget> {
       return GridView.builder(
         itemCount: videoList.length,
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisSpacing: 20.0,
             mainAxisSpacing: 20.0,
-            crossAxisSpacing: 6.0,
             crossAxisCount: (Orientation == Orientation.portrait) ? 1 : 2),
         itemBuilder: (BuildContext context, int index) {
           return Container(
-            width: size.width,
-            height: size.height,
             decoration: const BoxDecoration(
-                color: Colors.transparent,
                 borderRadius: BorderRadius.all(Radius.circular(15))),
             child: InkWell(
               onTap: () => Navigator.push(
@@ -139,36 +133,43 @@ class _VideoGridWidgetState extends State<VideoGridWidget> {
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.done) {
                     if (snapshot.hasData) {
-                      return Column(
-                        children: [
-                          Hero(
-                            tag: videoList[index],
-                            child: Stack(
-                              children: [
-                                ClipRRect(
-                                  borderRadius: const BorderRadius.all(
-                                      Radius.circular(15)),
-                                  child: Image.file(
-                                    File(
-                                      snapshot.data.toString(),
-                                    ),
-                                    fit: BoxFit.cover,
-                                  ),
+                      return Hero(
+                        tag: videoList[index],
+                        child: Stack(
+                          children: [
+                            Container(
+                              decoration: const BoxDecoration(
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(15))),
+                              width: size.width,
+                              height: 160,
+                              child: Image.file(
+                                File(
+                                  snapshot.data.toString(),
                                 ),
-                              ],
+                                fit: BoxFit.cover,
+                              ),
                             ),
-                          )
-                        ],
+                            const Positioned(
+                              left: 0,
+                              right: 0,
+                              top: 0,
+                              bottom: 0,
+                              child: Icon(
+                                size: 50,
+                                Icons.play_circle_outline_rounded,
+                                color: ThemeColor.white,
+                              ),
+                            ),
+                          ],
+                        ),
                       );
                     } else {
-                      return const Center(
-                        child: CircularProgressIndicator(),
-                      );
+                      return Text('fuck');
                     }
                   } else {
-                    return Container(
-                      child: Image.network(
-                          'https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/No-Image-Placeholder.svg/1665px-No-Image-Placeholder.svg.png'),
+                    return const Center(
+                      child: CircularProgressIndicator(),
                     );
                   }
                 },
@@ -191,77 +192,6 @@ class _VideoGridWidgetState extends State<VideoGridWidget> {
   }
 }
 
-// Container(
-//         margin: const EdgeInsets.all(12),
-//         child: StaggeredGridView.countBuilder(
-//           shrinkWrap: true,
-//           crossAxisCount: 2,
-//           crossAxisSpacing: 6,
-//           mainAxisSpacing: 14,
-//           itemCount: videoList.length,
-//           itemBuilder: (context, index) {
-//             return Container(
-//               decoration: const BoxDecoration(
-//                   color: Colors.transparent,
-//                   borderRadius: BorderRadius.all(Radius.circular(15))),
-//               child: InkWell(
-//                 onTap: () => Navigator.push(
-//                   context,
-//                   MaterialPageRoute(
-//                     builder: (context) => PlayStatusVideo(videoList[index]),
-//                   ),
-//                 ),
-//                 child: FutureBuilder(
-//                   future: _getImage(videoList[index]),
-//                   builder: (context, snapshot) {
-//                     if (snapshot.connectionState == ConnectionState.done) {
-//                       if (snapshot.hasData) {
-//                         return Column(
-//                           children: [
-//                             Hero(
-//                               tag: videoList[index],
-//                               child: Stack(
-//                                 children: [
-//                                   ClipRRect(
-//                                     borderRadius: const BorderRadius.all(
-//                                         Radius.circular(15)),
-//                                     child: Image.file(
-//                                       File(
-//                                         snapshot.data.toString(),
-//                                       ),
-//                                       fit: BoxFit.cover,
-//                                     ),
-//                                   ),
-//                                   Container(
-//                                     alignment: Alignment.bottomCenter,
-//                                     child: const Icon(Icons.play_arrow),
-//                                   )
-//                                 ],
-//                               ),
-//                             )
-//                           ],
-//                         );
-//                       } else {
-//                         return const Center(
-//                           child: CircularProgressIndicator(),
-//                         );
-//                       }
-//                     } else {
-//                       return Container(
-//                         child: Image.network(
-//                             'https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/No-Image-Placeholder.svg/1665px-No-Image-Placeholder.svg.png'),
-//                       );
-//                     }
-//                   },
-//                 ),
-//               ),
-//             );
-//           },
-//           staggeredTileBuilder: (index) {
-//             return StaggeredTile.count(1, index.isEven ? 1.2 : 1.8);
-//           },
-//         ),
-//       );
 class PlayStatusVideo extends StatefulWidget {
   final String videoFile;
 
