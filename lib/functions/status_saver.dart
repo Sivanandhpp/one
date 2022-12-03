@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:chewie/chewie.dart';
 import 'package:flutter/material.dart';
+import 'package:animated_segmented_tab_control/animated_segmented_tab_control.dart';
 import 'package:one/models/themecolor.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:video_player/video_player.dart';
@@ -9,6 +10,9 @@ import 'package:video_thumbnail/video_thumbnail.dart';
 
 final Directory _videoDir =
     Directory('/storage/emulated/0/WhatsApp/Media/.Statuses');
+//if android version 11 or above
+final Directory _newVideoDir = Directory(
+    '/storage/emulated/0/Android/media/com.whatsapp/WhatsApp/Media/.Statuses');
 
 class StatusSaver extends StatefulWidget {
   const StatusSaver({super.key});
@@ -26,13 +30,137 @@ class _StatusSaverState extends State<StatusSaver> {
   @override
   Widget build(BuildContext context) {
     if (!Directory(_videoDir.path).existsSync()) {
-      return const Scaffold(
+      return Scaffold(
         backgroundColor: ThemeColor.scaffoldBgColor,
         body: SafeArea(
-          child: Center(
-            child: Text(
-              "Install WhatsApp\nYour Friend's Status will be available here.",
-              style: TextStyle(fontSize: 18.0),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 25.0, vertical: 20),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    InkWell(
+                      child: Container(
+                        decoration: BoxDecoration(
+                            color: ThemeColor.lightGrey,
+                            borderRadius: BorderRadius.circular(12)),
+                        padding: const EdgeInsets.all(12),
+                        child: const Icon(
+                          Icons.arrow_back_ios_new,
+                          color: Colors.white,
+                        ),
+                      ),
+                      onTap: () {
+                        Navigator.pop(context);
+                      },
+                    )
+                  ],
+                ),
+                const SizedBox(
+                  height: 100,
+                ),
+                Center(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    // ignore: prefer_const_literals_to_create_immutables
+                    children: const [
+                      Text(
+                        "Oops...WhatsApp not found!",
+                        style: TextStyle(
+                            fontSize: 20.0, fontWeight: FontWeight.bold),
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Text(
+                        "Install WhatsApp\nAvailable videos will be shown here",
+                        style: TextStyle(fontSize: 18.0),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      );
+    } else if (!Directory(_newVideoDir.path).existsSync()) {
+      return Scaffold(
+        backgroundColor: ThemeColor.scaffoldBgColor,
+        body: SafeArea(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 25.0, vertical: 20),
+            child: Column(
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    const Text(
+                      'Whatsapp Status',
+                      style: TextStyle(
+                        color: ThemeColor.black,
+                        fontSize: 24,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    InkWell(
+                      child: Container(
+                        decoration: BoxDecoration(
+                            color: ThemeColor.lightGrey,
+                            borderRadius: BorderRadius.circular(12)),
+                        padding: const EdgeInsets.all(12),
+                        child: const Icon(
+                          Icons.arrow_back_ios_new,
+                          color: Colors.white,
+                        ),
+                      ),
+                      onTap: () {
+                        Navigator.pop(context);
+                      },
+                    )
+                  ],
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+                DefaultTabController(
+                  initialIndex: 0,
+                  length: 2,
+                  child: Column(
+                    children: const [
+                      SegmentedTabControl(
+                        height: 30,
+                        radius: Radius.circular(10),
+                        backgroundColor: ThemeColor.lightGrey,
+                        indicatorColor: ThemeColor.primary,
+                        tabTextColor: ThemeColor.black,
+                        selectedTabTextColor: ThemeColor.white,
+                        tabs: [
+                          SegmentTab(
+                            label: "Videos",
+                          ),
+                          SegmentTab(
+                            label: "Photos",
+                          ),
+                        ],
+                      ),
+                      // TabBarView(
+                      //   physics: BouncingScrollPhysics(),
+                      //   children: [
+                      //     Center(child: CircularProgressIndicator()),
+                      //     Center(child: CircularProgressIndicator())
+                      //   ],
+                      // ),
+                    ],
+                  ),
+                ),
+                const SizedBox(
+                  height: 30,
+                ),
+                Expanded(child: VideoGridWidget(directory: _videoDir))
+              ],
             ),
           ),
         ),
@@ -42,7 +170,7 @@ class _StatusSaverState extends State<StatusSaver> {
         backgroundColor: ThemeColor.scaffoldBgColor,
         body: SafeArea(
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 20),
+            padding: const EdgeInsets.symmetric(horizontal: 25.0, vertical: 20),
             child: Column(
               children: [
                 Row(
@@ -76,7 +204,7 @@ class _StatusSaverState extends State<StatusSaver> {
                 const SizedBox(
                   height: 30,
                 ),
-                Expanded(child: VideoGridWidget(directory: _videoDir))
+                Expanded(child: VideoGridWidget(directory: _newVideoDir))
               ],
             ),
           ),
@@ -110,7 +238,7 @@ class _VideoGridWidgetState extends State<VideoGridWidget> {
         .map((item) => item.path)
         .where((item) => item.endsWith(".mp4"))
         .toList(growable: false);
-    if (videoList.length > 0) {
+    if (videoList.isNotEmpty) {
       return GridView.builder(
         itemCount: videoList.length,
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
@@ -165,7 +293,8 @@ class _VideoGridWidgetState extends State<VideoGridWidget> {
                         ),
                       );
                     } else {
-                      return Text('fuck');
+                      return Image.network(
+                          'https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/No-Image-Placeholder.svg/1665px-No-Image-Placeholder.svg.png');
                     }
                   } else {
                     return const Center(
@@ -258,7 +387,7 @@ class _PlayStatusVideoState extends State<PlayStatusVideo> {
                           const Padding(
                             padding: EdgeInsets.all(10.0),
                           ),
-                          const Text("FileManager > Downloaded Status",
+                          const Text("FileManager > One > Whatsapp Status",
                               style: TextStyle(
                                   fontSize: 16.0, color: Colors.teal)),
                           const Padding(
@@ -286,11 +415,19 @@ class _PlayStatusVideoState extends State<PlayStatusVideo> {
     return Scaffold(
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
+          padding: const EdgeInsets.symmetric(horizontal: 25.0, vertical: 20),
           child: Column(children: <Widget>[
             Row(
-              mainAxisAlignment: MainAxisAlignment.end,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
+                const Text(
+                  'Video Player',
+                  style: TextStyle(
+                    color: ThemeColor.black,
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
                 InkWell(
                   child: Container(
                     decoration: BoxDecoration(
@@ -320,42 +457,69 @@ class _PlayStatusVideoState extends State<PlayStatusVideo> {
             const SizedBox(
               height: 20,
             ),
-            Container(
-              color: ThemeColor.lightBlue,
-              padding:
-                  const EdgeInsets.symmetric(horizontal: 50.0, vertical: 10.0),
-              child: TextButton.icon(
-                icon: const Icon(
-                  Icons.file_download,
-                  color: ThemeColor.white,
-                ),
-                label: const Text(
-                  'Download',
-                  style: TextStyle(
-                    fontSize: 16.0,
-                    color: ThemeColor.white,
-                  ),
-                ), //`Text` to display
-                onPressed: () async {
-                  _onLoading(true, "");
+            GestureDetector(
+              onTap: () async {
+                _onLoading(true, "");
 
-                  File originalVideoFile = File(widget.videoFile);
-                  Directory? directory = await getExternalStorageDirectory();
-                  if (!Directory("${directory?.path}/Downloaded Status/Videos")
-                      .existsSync()) {
-                    Directory("${directory?.path}/Downloaded Status/Videos")
-                        .createSync(recursive: true);
-                  }
-                  String? path = directory?.path;
-                  String curDate = DateTime.now().toString();
-                  String newFileName =
-                      "$path/Downloaded Status/Videos/VIDEO-$curDate.mp4";
-                  print(newFileName);
-                  await originalVideoFile.copy(newFileName);
+                File originalVideoFile = File(widget.videoFile);
+                Directory? directory = await getExternalStorageDirectory();
+                if (!Directory("/storage/emulated/0/one/Whatsapp Status")
+                    .existsSync()) {
+                  Directory("/storage/emulated/0/one/Whatsapp Status/")
+                      .createSync(recursive: true);
+                }
+                // String? path = directory?.path;
+                String curDate = DateTime.now().toString();
+                String newFileName =
+                    "/storage/emulated/0/one/Whatsapp Status/VIDEO-$curDate.mp4";
+                print(newFileName);
+                await originalVideoFile.copy(newFileName);
 
-                  _onLoading(false,
-                      "If Video not available in gallary\n\nYou can find all videos at");
-                },
+                _onLoading(false, "If video is not showing in gallary check");
+              },
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Container(
+                    height: 50,
+                    width: 280,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(12),
+                        color: ThemeColor.primary),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: const [
+                        Icon(
+                          Icons.download,
+                          color: ThemeColor.white,
+                        ),
+                        SizedBox(
+                          width: 5,
+                        ),
+                        Text("Download",
+                            style: TextStyle(
+                                fontSize: 15.0,
+                                color: ThemeColor.white,
+                                fontWeight: FontWeight.bold)),
+                      ],
+                    ),
+                  ), //TODO
+
+                  GestureDetector(
+                    onTap: () async {},
+                    child: Container(
+                      height: 50,
+                      width: 50,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(12),
+                          color: ThemeColor.primary),
+                      child: const Icon(
+                        Icons.share,
+                        color: ThemeColor.white,
+                      ),
+                    ),
+                  )
+                ],
               ),
             ),
           ]),
