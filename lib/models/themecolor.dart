@@ -9,6 +9,7 @@ class ThemeColor {
   static const Color red = Color(0xFFfd6129);
   static const Color lightGrey = Color(0xFFBDC4CE);
   static const Color lightBlue = Color(0xFF80A4F1);
+  static const Color royalBlue = Color.fromARGB(255, 205, 227, 255);
 
   static const Color primary = Color(0xFF3C6EE0);
   static const Color secondary = Color(0xFF2554C2);

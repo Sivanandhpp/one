@@ -1,18 +1,26 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:one/screens/dashboard.dart';
+import 'package:one/screens/splashscreeen.dart';
+import 'package:one/screens/startscreen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:torch_controller/torch_controller.dart';
 
-import 'dashboard.dart';
-
+late SharedPreferences spInstance;
 
 void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
   TorchController().initialize();
-  
+  spInstance = await SharedPreferences.getInstance();
+  SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
+      statusBarColor: Colors.transparent,
+      statusBarIconBrightness: Brightness.dark));
+
   runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
-
 
   // This widget is the root of your application.
   @override
@@ -23,7 +31,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const DashBoard(),
+      home: const SplashScreen(),
     );
   }
 }

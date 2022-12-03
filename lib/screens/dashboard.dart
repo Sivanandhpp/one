@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:intl_phone_number_input/intl_phone_number_input.dart';
-import 'package:one/functions/status_saver.dart';
 import 'package:one/functions/strobelight.dart';
+import 'package:one/functions/whatsapp/photo.dart';
+import 'package:one/functions/whatsapp/status_saver.dart';
 import 'package:one/functions/ytdownload.dart';
 import 'package:one/models/themecolor.dart';
 import 'package:open_whatsapp/open_whatsapp.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 class DashBoard extends StatefulWidget {
   const DashBoard({super.key});
@@ -215,7 +217,7 @@ class _DashBoardState extends State<DashBoard> {
                         color: Colors.white,
                       ),
                     ),
-                    onTap: () {
+                    onTap: () async {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
@@ -238,15 +240,13 @@ class _DashBoardState extends State<DashBoard> {
                           borderRadius: BorderRadius.circular(10)),
                       padding: const EdgeInsets.all(20),
                       child: const Icon(
-                        Icons.flash_on_rounded,
+                        Icons.insert_page_break_rounded,
                         color: Colors.white,
                       ),
                     ),
                     onTap: () {
-                      // Navigator.push(
-                      //     context,
-                      //     MaterialPageRoute(
-                      //         builder: (context) => ));
+                      // Navigator.push(context,
+                      //     MaterialPageRoute(builder: (context) => Photos()));
                     },
                   ),
                 ],

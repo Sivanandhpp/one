@@ -2,7 +2,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:one/functions/playsatusvideo.dart';
+import 'package:one/functions/whatsapp/playsatusvideo.dart';
 import 'package:one/models/themecolor.dart';
 import 'package:video_thumbnail/video_thumbnail.dart';
 

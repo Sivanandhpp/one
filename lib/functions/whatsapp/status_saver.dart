@@ -1,8 +1,8 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:animated_segmented_tab_control/animated_segmented_tab_control.dart';
-import 'package:one/functions/videogridwidget.dart';
+import 'package:one/functions/whatsapp/photo.dart';
+import 'package:one/functions/whatsapp/videogridwidget.dart';
 import 'package:one/models/themecolor.dart';
 
 final Directory _videoDir =
@@ -163,15 +163,13 @@ class _StatusSaverState extends State<StatusSaver>
                 Expanded(
                   child: TabBarView(
                     controller: _tabController,
-                    physics:const BouncingScrollPhysics(),
+                    physics: const BouncingScrollPhysics(),
                     children: [
                       Expanded(child: VideoGridWidget(directory: _videoDir)),
-                      const Center(child: CircularProgressIndicator())
+                      Expanded(child: Photos()),
                     ],
                   ),
                 ),
-
-                
               ],
             ),
           ),
@@ -225,4 +223,3 @@ class _StatusSaverState extends State<StatusSaver>
     }
   }
 }
-

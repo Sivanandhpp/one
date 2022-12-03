@@ -75,13 +75,13 @@ class _PlayStatusVideoState extends State<PlayStatusVideo> {
                           ),
                           const Text("FileManager > One > Whatsapp Status",
                               style: TextStyle(
-                                  fontSize: 16.0, color: Colors.teal)),
+                                  fontSize: 16.0, color: ThemeColor.primary)),
                           const Padding(
                             padding: EdgeInsets.all(10.0),
                           ),
                           MaterialButton(
-                            color: Colors.teal,
-                            textColor: Colors.white,
+                            color: ThemeColor.primary,
+                            textColor: ThemeColor.white,
                             onPressed: () => Navigator.pop(context),
                             child: const Text("Close"),
                           )
