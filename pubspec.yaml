@@ -50,6 +50,7 @@ dependencies:
   video_player: ^2.4.8
   video_thumbnail: ^0.5.3
   youtube_explode_dart: ^1.12.3
+  font_awesome_flutter: ^10.3.0
 
 dev_dependencies:
   flutter_lints: ^2.0.0

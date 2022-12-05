@@ -5,6 +5,7 @@ import 'package:one/functions/whatsapp/status_saver.dart';
 import 'package:one/functions/ytdownload.dart';
 import 'package:one/models/themecolor.dart';
 import 'package:open_whatsapp/open_whatsapp.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class DashBoard extends StatefulWidget {
   const DashBoard({super.key});
@@ -157,8 +158,8 @@ class _DashBoardState extends State<DashBoard> {
                           color: ThemeColor.ytRed,
                           borderRadius: BorderRadius.circular(10)),
                       padding: const EdgeInsets.all(20),
-                      child: const Icon(
-                        Icons.play_arrow_rounded,
+                      child: const FaIcon(
+                        FontAwesomeIcons.youtube,
                         color: Colors.white,
                       ),
                     ),
@@ -184,8 +185,8 @@ class _DashBoardState extends State<DashBoard> {
                           color: ThemeColor.orangeForLoc,
                           borderRadius: BorderRadius.circular(10)),
                       padding: const EdgeInsets.all(20),
-                      child: const Icon(
-                        Icons.flash_on_rounded,
+                      child: const FaIcon(
+                        FontAwesomeIcons.bolt,
                         color: Colors.white,
                       ),
                     ),
@@ -210,9 +211,9 @@ class _DashBoardState extends State<DashBoard> {
                           color: ThemeColor.green,
                           borderRadius: BorderRadius.circular(10)),
                       padding: const EdgeInsets.all(20),
-                      child: const Icon(
-                        Icons.download,
-                        color: Colors.white,
+                      child: const FaIcon(
+                        FontAwesomeIcons.floppyDisk,
+                        color: ThemeColor.white,
                       ),
                     ),
                     onTap: () async {
@@ -234,13 +235,11 @@ class _DashBoardState extends State<DashBoard> {
                                 spreadRadius: 0.1,
                                 offset: Offset(0, 10)),
                           ],
-                          color: ThemeColor.primary,
+                          color: ThemeColor.instaPurpleRed,
                           borderRadius: BorderRadius.circular(10)),
                       padding: const EdgeInsets.all(20),
-                      child: const Icon(
-                        Icons.insert_page_break_rounded,
-                        color: Colors.white,
-                      ),
+                      child: const FaIcon(FontAwesomeIcons.instagram,
+                          color: ThemeColor.white),
                     ),
                     onTap: () {
                       // Navigator.push(context,

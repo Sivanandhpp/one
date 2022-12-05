@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:one/screens/dashboard.dart';
-import 'package:one/functions/loadingscreen.dart';
+import 'package:one/screens/loadingscreen.dart';
 import 'package:one/main.dart';
 import 'package:one/screens/startscreen.dart';
 

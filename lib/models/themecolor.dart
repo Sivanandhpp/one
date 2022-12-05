@@ -23,5 +23,6 @@ class ThemeColor {
   static const Color greenForLoc = Color(0xFF73E03D);
 
   static const Color waGreen = Color(0xFF25D366);
+  static const Color instaPurpleRed = Color(0xFFE1306C);
   static const Color ytRed = Color(0xFFFF0000);
 }
