@@ -1,7 +1,7 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:animated_segmented_tab_control/animated_segmented_tab_control.dart';
-import 'package:one/functions/whatsapp/photo.dart';
+import 'package:one/functions/whatsapp/viewstatusphoto.dart';
 import 'package:one/functions/whatsapp/videogridwidget.dart';
 import 'package:one/models/themecolor.dart';
 
@@ -166,7 +166,7 @@ class _StatusSaverState extends State<StatusSaver>
                     physics: const BouncingScrollPhysics(),
                     children: [
                       Expanded(child: VideoGridWidget(directory: _videoDir)),
-                      Expanded(child: Photos()),
+                      Expanded(child: ViewStatusPhoto()),
                     ],
                   ),
                 ),

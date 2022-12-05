@@ -3,7 +3,6 @@ import 'package:one/screens/dashboard.dart';
 import 'package:one/functions/loadingscreen.dart';
 import 'package:one/main.dart';
 import 'package:one/screens/startscreen.dart';
-import 'package:permission_handler/permission_handler.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);

@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:one/screens/dashboard.dart';
-import 'package:one/screens/splashscreeen.dart';
-import 'package:one/screens/startscreen.dart';
+import 'package:one/screens/splashscreen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:torch_controller/torch_controller.dart';
 
